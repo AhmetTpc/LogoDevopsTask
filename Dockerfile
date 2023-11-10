@@ -5,8 +5,8 @@ FROM node:14-slim
 WORKDIR /app
 
 # Proje dosyalarını Docker çalışma dizinine kopyalayın
-RUN npm install
-RUN npx create-react-app logo
+COPY package*.json ./
+COPY . .
 
 # Uygulamayı başlatın
 CMD ["sh", "-c", "cd logo && npm start"]
