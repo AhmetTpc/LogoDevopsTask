@@ -4,9 +4,9 @@
 Bu proje Logo şirketinin Patika.dev aracılığı ile Fırat Üniversitesi Öğrencileri için açılan Bootcamp Bitirme Ödevidir.
 
 Bu ödev daha öncesinde bize iletildiği üzere bir react projesini, bu projeyi dockerize edecek 
- [Dockerfile dosyasını](https://github.com/AhmetTpc/LogoDevopsTask) , Kubernetes üzerinde ölçeklendirip kullanıma açacak  [deployment](https://github.com/AhmetTpc/LogoDevopsTask)
-  ve  [service](https://github.com/AhmetTpc/LogoDevopsTask) yaml dosyalarını, Gitlab üzerinde pipeline oluşturacak [gitlab-ci.yaml ](hhttps://github.com/AhmetTpc/LogoDevopsTask) dosyasını ve AWS üzerinde gerekli işlemleri yapacak 
-  [CloudFormation JSON ](https://github.com/AhmetTpc/LogoDevopsTask)dosyasını içermektedir.
+ [Dockerfile dosyasını](https://github.com/AhmetTpc/LogoDevopsTask/blob/main/Dockerfile) , Kubernetes üzerinde ölçeklendirip kullanıma açacak  [deployment](https://github.com/AhmetTpc/LogoDevopsTask/blob/main/deployment.yaml)
+  ve  [service](https://github.com/AhmetTpc/LogoDevopsTask/blob/main/service.yaml) yaml dosyalarını, Gitlab üzerinde pipeline oluşturacak [gitlab-ci.yaml ](https://github.com/AhmetTpc/LogoDevopsTask/blob/main/.gitlab-ci.yml) dosyasını ve AWS üzerinde gerekli işlemleri yapacak 
+  [CloudFormation JSON ](https://github.com/AhmetTpc/LogoDevopsTask/blob/main/CloudFormation.json)dosyasını içermektedir. **Bu işlemlerin Terrafrom yerine CloudFormation ile yapılma sebebi ise hocamızın işlenen ders müfredatında Terraform olmaması sebebi ile onun yerine müfredatta bulunan CloudFormation ile yapmasıdır.**
 
 Projede dockerize edilen React image aynı zamanda bana ait olan dockerhuba da push edilmiştir. [Buraya tıklayarak görüntüleyebilirsiniz.](https://hub.docker.com/r/vexrem/logo-final-task)
 
@@ -42,12 +42,12 @@ Oluşturulan React image'ına ait Kubernetes manifest dosyalarını bu komutlarl
   localhost:30000 adresinden çalışmakta olan projemizi görüntüleyebiliriz.
 
 ## Proje Çıktıları
-[Gitlab Project](https://github.com/AhmetTpc/LogoDevopsTask)
+[Gitlab Project](https://gitlab.com/AhmetTopcu/LogoDevopsTaskv2)
 
-[CloudFormation JSON](https://github.com/AhmetTpc/LogoDevopsTask) ( **Terraform** yerine derste bunu gördüğümüz için bununla oluşturdum.)
+[CloudFormation JSON](https://github.com/AhmetTpc/LogoDevopsTask/blob/main/CloudFormation.json) ( **Terraform** yerine derste bunu gördüğümüz için bununla oluşturdum.)
 
- Kubernets Manifest dosyalarından[ deployment](https://github.com/AhmetTpc/LogoDevopsTask)
-  ve  [service](https://github.com/AhmetTpc/LogoDevopsTask) dosyaları
+ Kubernets Manifest dosyalarından[ deployment](https://github.com/AhmetTpc/LogoDevopsTask/blob/main/deployment.yaml)
+  ve  [service](https://github.com/AhmetTpc/LogoDevopsTask/blob/main/service.yaml) dosyaları
 ## Kullanılan Teknolojiler
 
 **React, Docker, Kubernetes, Gitlab, AWS** 
