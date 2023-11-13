@@ -5,7 +5,7 @@ FROM node:14-slim
 WORKDIR /app
 
 # Proje dosyalarını Docker çalışma dizinine kopyalayın
-COPY package*.json ./
+
 COPY . .
 
 # Uygulamayı başlatın

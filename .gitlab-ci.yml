@@ -1,0 +1,24 @@
+#projemizde test adımı bulunmadığı için build ve deploydan oluşan bir ci.yml dosyası hazırlıyoruz.
+stages:
+  - build
+  - deploy
+
+#build yapılacak image bilgileri ve build bilgilerini veriyoruz
+build:
+    stage: build
+    image: node:14-slim
+    script:
+        - npm install
+        - docker build -t logofinaltask:latest ./logo/Dockerfile
+    artifacts:
+        paths:
+            - build
+
+#deploy kısmında ise build kısmında yazan bilgiler ve hazırladığımız dockerfile ile build kısmını docker üzerinde tamamlayıp push edeceği kodları yazıyoruz.
+deploy:
+    stage: deploy
+    image: docker:latest
+    script:
+        
+        - docker tag logofinaltask registry.ec2.amazon.com/logofinaltask:latest
+        - docker push registry.ec2.amazon.com/LogoFinalTask:latest

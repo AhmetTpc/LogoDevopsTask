@@ -1,0 +1,18 @@
+# NodePort Kullanma sebebim şu özellikleri içindir;
+#NodePort, ClusterIP'nin sunduğu küme içi iletişim özelliğine ek olarak, dış dünyadan erişilebilir olma özelliği de sağlar.
+#NodePort kullanıldığında, bir servis aynı zamanda ClusterIP özelliğini de barındırır. NodePort, özellikle dış dünyadan erişim gerektiren durumlarda kullanışlıdır.
+#Nodeport yardımı ile bu service çalıştıktan sonra localhost:30000 portundan projeyi görebiliriz.
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: final-task-app
+spec:
+  selector:
+    app: final-task-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 3000
+    nodePort: 30000
+  type: NodePort

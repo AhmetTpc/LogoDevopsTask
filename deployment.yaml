@@ -1,0 +1,23 @@
+#
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: final-task-app
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: final-task-app
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: final-task-app
+        version: v1
+    spec:
+      containers:
+      - name: final-task-app
+        image: vexrem/logo-final-task:latest
+        ports:
+        - containerPort: 3000

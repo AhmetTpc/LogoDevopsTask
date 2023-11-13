@@ -1,0 +1,130 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+      "MyVPC": {
+        "Type": "AWS::EC2::VPC",
+        "Properties": {
+          "CidrBlock": "10.0.0.0/16",
+          "EnableDnsSupport": "true",
+          "EnableDnsHostnames": "true",
+          "Tags": [
+            {
+              "Key": "Name",
+              "Value": "MyVPC"
+            }
+          ]
+        }
+      },
+      "MySubnet": {
+        "Type": "AWS::EC2::Subnet",
+        "Properties": {
+          "VpcId": { "Ref": "MyVPC" },
+          "CidrBlock": "10.0.0.0/24",
+          "AvailabilityZone": "eu-central-1a",
+          "Tags": [
+            {
+              "Key": "Name",
+              "Value": "MySubnet"
+            }
+          ]
+        }
+      },
+      "MySecurityGroup": {
+        "Type": "AWS::EC2::SecurityGroup",
+        "Properties": {
+          "VpcId": { "Ref": "MyVPC" },
+          "GroupDescription": "MySecurityGroup",
+          "SecurityGroupIngress": [
+            {
+              "IpProtocol": "-1",
+              "CidrIp": "0.0.0.0/0"
+            }
+          ],
+          "Tags": [
+            {
+              "Key": "Name",
+              "Value": "MySecurityGroup"
+            }
+          ]
+        }
+      },
+      "MyLoadBalancer": {
+        "Type": "AWS::ElasticLoadBalancingV2::LoadBalancer",
+        "Properties": {
+          "Subnets": [ { "Ref": "MySubnet" } ],
+          "SecurityGroups": [ { "Ref": "MySecurityGroup" } ],
+          "Tags": [
+            {
+              "Key": "Name",
+              "Value": "MyLoadBalancer"
+            }
+          ]
+        }
+      },
+      "MyCluster": {
+        "Type": "AWS::ECS::Cluster",
+        "Properties": {
+          "ClusterName": "MyCluster"
+        }
+      },
+      "MyTaskDefinition": {
+        "Type": "AWS::ECS::TaskDefinition",
+        "Properties": {
+          "Family": "MyTaskDefinition",
+          "NetworkMode": "awsvpc",
+          "RequiresCompatibilities": ["FARGATE"],
+          "ExecutionRoleArn": "arn:aws:iam::123456789012:role/ecsTaskExecutionRole",
+          "ContainerDefinitions": [
+            {
+              "Name": "MyContainer",
+              "Image": "nginx:latest",
+              "PortMappings": [
+                {
+                  "ContainerPort": 80,
+                  "HostPort": 80
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "MyService": {
+        "Type": "AWS::ECS::Service",
+        "Properties": {
+          "Cluster": { "Ref": "MyCluster" },
+          "ServiceName": "MyService",
+          "TaskDefinition": { "Ref": "MyTaskDefinition" },
+          "LaunchType": "FARGATE",
+          "NetworkConfiguration": {
+            "AwsvpcConfiguration": {
+              "Subnets": [ { "Ref": "MySubnet" } ],
+              "SecurityGroups": [ { "Ref": "MySecurityGroup" } ]
+            }
+          },
+          "LoadBalancers": [
+            {
+              "ContainerName": "MyContainer",
+              "ContainerPort": 80,
+              "TargetGroupArn": { "Fn::ImportValue": "MyTargetGroup" }
+            }
+          ],
+          "Tags": [
+            {
+              "Key": "Name",
+              "Value": "MyService"
+            }
+          ]
+        }
+      },
+      "MyTargetGroup": {
+        "Type": "AWS::ElasticLoadBalancingV2::TargetGroup",
+        "Properties": {
+          "Name": "MyTargetGroup",
+          "Port": 80,
+          "Protocol": "HTTP",
+          "VpcId": { "Ref": "MyVPC" }
+        }
+      }
+    }
+  }
+  
